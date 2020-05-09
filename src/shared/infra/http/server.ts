@@ -26,6 +26,8 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
     });
   }
 
+  console.log(err);
+
   console.error(err);
 
   return response.status(500).json({
