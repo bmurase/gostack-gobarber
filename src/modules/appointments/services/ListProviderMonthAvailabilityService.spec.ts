@@ -15,56 +15,67 @@ describe('ListProviderMonthAvailability', () => {
   it('should be able to list a providers month availability', async () => {
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
+      user_id: 'user_id',
       date: new Date(2020, 4, 30, 8, 0, 0),
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
+      user_id: 'user_id',
       date: new Date(2020, 4, 30, 9, 0, 0),
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
+      user_id: 'user_id',
       date: new Date(2020, 4, 30, 10, 0, 0),
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
+      user_id: 'user_id',
       date: new Date(2020, 4, 30, 11, 0, 0),
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
+      user_id: 'user_id',
       date: new Date(2020, 4, 30, 12, 0, 0),
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
+      user_id: 'user_id',
       date: new Date(2020, 4, 30, 13, 0, 0),
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
+      user_id: 'user_id',
       date: new Date(2020, 4, 30, 14, 0, 0),
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
+      user_id: 'user_id',
       date: new Date(2020, 4, 30, 15, 0, 0),
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
+      user_id: 'user_id',
       date: new Date(2020, 4, 30, 16, 0, 0),
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
+      user_id: 'user_id',
       date: new Date(2020, 4, 30, 17, 0, 0),
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
+      user_id: 'user_id',
       date: new Date(2020, 4, 28, 17, 0, 0),
     });
 
