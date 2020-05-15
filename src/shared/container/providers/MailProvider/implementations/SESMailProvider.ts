@@ -1,30 +1,24 @@
 import nodemailer, { Transporter } from 'nodemailer';
-import { inject, injectable } from 'tsyringe';
+import aws from 'aws-sdk';
+import { injectable, inject } from 'tsyringe';
 import mailConfig from '@config/mail';
-import IMailTemplateProvider from '../../MailTemplateProvider/models/IMailTemplateProvider';
 import IMailProvider from '../models/IMailProvider';
+import IMailTemplateProvider from '../../MailTemplateProvider/models/IMailTemplateProvider';
 import ISendMailDTO from '../dtos/ISendMailDTO';
 
 @injectable()
-class EtherealMailProvider implements IMailProvider {
+class SESMailProvider implements IMailProvider {
   private client: Transporter;
 
   constructor(
     @inject('MailTemplateProvider')
     private mailTemplateProvider: IMailTemplateProvider,
   ) {
-    nodemailer.createTestAccount().then(account => {
-      const transporter = nodemailer.createTransport({
-        host: account.smtp.host,
-        port: account.smtp.port,
-        secure: account.smtp.secure,
-        auth: {
-          user: account.user,
-          pass: account.pass,
-        },
-      });
-
-      this.client = transporter;
+    this.client = nodemailer.createTransport({
+      SES: new aws.SES({
+        apiVersion: '2010-12-01',
+        region: process.env.AWS_DEFAULT_REGION,
+      }),
     });
   }
 
@@ -35,7 +29,7 @@ class EtherealMailProvider implements IMailProvider {
     templateData,
   }: ISendMailDTO): Promise<void> {
     const { name, email } = mailConfig.defaults.from;
-    const message = await this.client.sendMail({
+    await this.client.sendMail({
       from: {
         name: from?.name || name,
         address: from?.email || email,
@@ -47,10 +41,7 @@ class EtherealMailProvider implements IMailProvider {
       subject,
       html: await this.mailTemplateProvider.parse(templateData),
     });
-
-    console.log('Message sent: %s', message.messageId);
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(message));
   }
 }
 
-export default EtherealMailProvider;
+export default SESMailProvider;
