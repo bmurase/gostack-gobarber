@@ -8,7 +8,7 @@ import { celebrate, Segments, Joi } from 'celebrate';
 import UsersController from '../controllers/UsersController';
 import UserAvatarController from '../controllers/UserAvatarController';
 
-const upload = multer(uploadConfig);
+const upload = multer(uploadConfig.multer);
 
 const usersRouter = Router();
 const usersController = new UsersController();
