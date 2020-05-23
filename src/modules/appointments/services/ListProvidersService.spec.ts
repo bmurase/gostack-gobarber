@@ -41,4 +41,30 @@ describe('ListProviders', () => {
 
     expect(providers).toEqual([provider1, provider2]);
   });
+
+  it('should be able to search for list in cache', async () => {
+    const user = await fakeUsersRepository.create({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: 'qwerty',
+    });
+
+    await fakeUsersRepository.create({
+      name: 'John Trê',
+      email: 'johntre@example.com',
+      password: 'qwerty',
+    });
+
+    let providers = await listProviders.execute({
+      user_id: user.id,
+    });
+
+    const recoveredData = await fakeCacheProvider.recover(
+      `providers-list:${user.id}`,
+    );
+
+    providers = await listProviders.execute({ user_id: user.id });
+
+    expect(providers).toEqual(recoveredData);
+  });
 });
